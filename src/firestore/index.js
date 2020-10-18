@@ -21,31 +21,32 @@ const db = firebaseApp.firestore();
 const auth = firebaseApp.auth();
 const storage = firebaseApp.storage();
 
-
-export async function signInWithGoogle(){
-    const provider = new firebase.auth.GoogleAuthProvider()
-    await auth.signInWithPopup(provider)
-    window.location.reload()
+export async function signInWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  await auth.signInWithPopup(provider);
+  window.location.reload();
 }
 
-export function checkAuth(cb){
-    return auth.onAuthStateChanged(cb)
+export function checkAuth(cb) {
+  return auth.onAuthStateChanged(cb);
 }
 
-export async function logOut(){
-    await auth.signOut();
-    window.location.reload();
+export async function logOut() {
+  await auth.signOut();
+  window.location.reload();
 }
 
-export async function getCollection(id){
-    const snapshot = await db.collection(id).get()
-    const data = snapshot.docs.map(doc=>({id:doc.id,...doc.data()})) 
+export async function getCollection(id) {
+  const snapshot = await db.collection(id).get();
+  const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 }
 
-export async function getUserLists(userId){
-    const snapshot = await db.collection("lists").where("author","==",userId)
-    .get()
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+export async function getUserLists(userId) {
+  const snapshot = await db
+    .collection("lists")
+    .where("author", "==", userId)
+    .get();
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 }
 
 async function uploadCoverImage(file) {
@@ -81,7 +82,18 @@ export async function createList(list, user) {
       {
         id: user.uid,
         name: user.displayName,
-      }
+      },
     ],
   });
+}
+
+export async function getList(listId) {
+  try {
+    const list = await db.collection("lists").doc(listId).get();
+    if(!list.exists) throw Error("List Doesn't Exist")
+    return list.data();
+  } catch (error) {
+      console.log(error)
+      throw Error(error);
+  }
 }
