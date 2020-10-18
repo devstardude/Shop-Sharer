@@ -16,7 +16,7 @@ function UserLists({user}) {
 
   return (
     <>
-      {/* display user list count */}
+      <UserListCount count={lists.length} />
       <section className="text-gray-500 bg-gray-900 body-font">
         <div className="container px-5 py-5 mx-auto">
           <div className="flex flex-wrap -m-4">
@@ -31,7 +31,7 @@ function UserLists({user}) {
   );
 }
 
-function UserListCount() {
+function UserListCount({count}) {
   return (
     <div className="container px-5 py-5 mb-6 bg-gray-800 rounded mx-auto flex justify-center text-center">
       <div className="p-4 sm:w-1/4 w-1/2">
@@ -47,7 +47,7 @@ function UserListCount() {
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
         </svg>
         <h2 className="title-font font-medium sm:text-4xl text-3xl text-white">
-          count
+          {count}
         </h2>
         <p className="leading-relaxed">Lists</p>
       </div>
@@ -55,27 +55,28 @@ function UserListCount() {
   );
 }
 
-function ListItem() {
+function ListItem({list}) {
+  const {id,name,description,image,users}=list
   return (
     <div className="lg:w-1/3 sm:w-1/2 p-4">
       {" "}
-      <Link to={`/id`}>
+      <Link to={`/${id}`}>
         <div className="flex relative">
           <img
             alt="gallery"
             className="absolute inset-0 w-full h-full object-cover object-center"
-            src={defaultImage}
+            src={image||defaultImage}
           />
           <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-800 bg-gray-900 opacity-0 hover:opacity-100">
             <ul className="list-disc">
               <li className="tracking-widest text-sm title-font font-medium text-orange-500 mb-1">
-                Username + 2 others
+               {users[0].name}{" "}{users.length>1 && `+${users.length-1} others`}
               </li>
             </ul>
             <h1 className="title-font text-lg font-medium text-white mb-3">
-              Name
+              {name}
             </h1>
-            <p className="leading-relaxed">Description</p>
+            <p className="leading-relaxed">{description}</p>
           </div>
         </div>
       </Link>

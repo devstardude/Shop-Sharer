@@ -1,27 +1,40 @@
 import React from "react";
 import * as db from "../firestore";
+import {mutate} from "swr";
+
+const DEFAULT_LIST = {
+  name: "",
+  description: "",
+  image: null,
+};
 
 function CreateList({ user }) {
-  const [list, setList] = React.useState({
-    name: "",
-    description: "",
-    image: null,
-  });
+  const [list, setList] = React.useState(DEFAULT_LIST);
+  const [submitting, setSubmitting] = React.useState(false);
 
   function handleChange(event) {
     const { name, value, files } = event.target;
     if (files) {
       const image = files[0];
-      console.log(image)
+      console.log(image);
       setList((prevState) => ({ ...prevState, image }));
     } else {
       setList((prevState) => ({ ...prevState, [name]: value }));
     }
   }
 
-  function handleCreateList() {
-    
-    db.createList(list, user);
+  async function handleCreateList() {
+    try {
+      setSubmitting(true);
+      await db.createList(list, user);
+      mutate(user.uid);
+      setList(DEFAULT_LIST);
+      setSubmitting(false);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -38,6 +51,7 @@ function CreateList({ user }) {
           placeholder="Add list name"
           type="text"
           name="name"
+          value={list.name}
           required
           onChange={handleChange}
         />
@@ -46,6 +60,7 @@ function CreateList({ user }) {
           placeholder="Add short description"
           type="text"
           name="description"
+          value={list.description}
           onChange={handleChange}
         />
         <input
@@ -60,10 +75,11 @@ function CreateList({ user }) {
           <img className="mb-4" src={URL.createObjectURL(list.image)} />
         )}
         <button
+          disabled={submitting}
           onClick={handleCreateList}
           className="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
         >
-          Create List
+          {submitting ? "Creating..." : "Create List"}
         </button>
         <p className="text-xs text-gray-600 mt-3">*List name required</p>
       </div>
