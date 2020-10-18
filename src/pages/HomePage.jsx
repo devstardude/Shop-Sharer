@@ -6,7 +6,7 @@ import {UserContext} from "../index"
 
 function HomePage() {
   const user = React.useContext(UserContext)
-  console.log({user})
+  console.log(user.uid)
   return (
     <Layout>
       <CreateList user={user} />

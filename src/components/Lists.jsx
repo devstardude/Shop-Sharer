@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import defaultImage from "../../static/default.svg";
-// import * as db from "../firestore";
+import * as db from "../firestore";
 // import Empty from "./shared/Empty";
 // import Error from "./shared/Error";
 // import Loading from "./shared/Loading";
 
 function UserLists() {
+  React.useEffect(()=>{
+    db.getUserLists("lqE8iK3xsDd0G4OVxjfOzur5shw2");
+  },[])
+  
   return (
     <>
       {/* display user list count */}
