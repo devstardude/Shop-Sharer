@@ -8,19 +8,23 @@ import SignIn from "./components/SignIn";
 import useAuth from "./hooks/useAuth";
 // import useAuth from "./hooks/useAuth";
 
-function App() {
-  const {user,loading}=useAuth()
+export const UserContext = React.createContext();
 
-  if(loading) return <Loading/>
-  return user?<AuthApp/>:<UnAuthApp/>
+function App() {
+  const { user, loading } = useAuth();
+
+  if (loading) return <Loading />;
+  return user ? <AuthApp user={user} /> : <UnAuthApp />;
 }
 
-function AuthApp() {
+function AuthApp({user}) {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/:listId" component={ListPage} />
-        <Route exact path="/" component={HomePage} />
+        <UserContext.Provider value={user}>
+          <Route path="/:listId" component={ListPage} />
+          <Route exact path="/" component={HomePage} />
+        </UserContext.Provider>
       </Switch>
     </BrowserRouter>
   );
