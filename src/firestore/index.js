@@ -122,3 +122,11 @@ export async function createListItem({ user, listId, item }) {
       throw new Error(error)
   }
 }
+
+export function subscribeToListItems(listId,cb){
+    return db.collection("lists")
+    .doc(listId)
+    .collection("items")
+    .orderBy("created","desc")
+    .onSnapshot(cb)
+}
