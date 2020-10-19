@@ -9,15 +9,19 @@ import Error from "../components/shared/Error";
 import Loading from "../components/shared/Loading";
 import * as db from "../firestore";
 import { UserContext } from "..";
+import useCopyClipboard from "react-use-clipboard"
 
 function ListPage({ location }) {
   const user=React.useContext(UserContext)
+  const [isCopied,setCopied]=useCopyClipboard(window.location.href,{
+    successDuration:1000
+  })
   const listId = location.pathname;
   const { data: list, error } = useSWR(listId, db.getList);
 
   if (error) return <Error message={error.message} />;
   if (!list) return <Loading />;
-  
+
   const isNewUser = list.users.every(u=>u.id!==user.uid);
   if(isNewUser){
     return <JoinList list={list} listId={listId} user={user} />
@@ -37,12 +41,12 @@ function ListPage({ location }) {
               New links appear below in realtime ✨
             </p>
             <div className="flex text-gray-300">
-              <button className="bg-orange-500 inline-flex py-3 px-5 rounded-lg items-center hover:bg-orange-600 hover:text-white focus:outline-none">
+              <button onClick={setCopied} className="bg-orange-500 inline-flex py-3 px-5 rounded-lg items-center hover:bg-orange-600 hover:text-white focus:outline-none">
                 <span className="flex items-start flex-col leading-none">
                   <span className="text-xs text-gray-200 mb-1">
                     Share With Friends
                   </span>
-                  <span className="title-font font-medium">Copy Link</span>
+                  <span className="title-font font-medium">{isCopied?"Copied":"Copy Link"}</span>
                 </span>
               </button>
               <Link

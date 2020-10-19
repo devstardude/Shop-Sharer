@@ -24,7 +24,7 @@ function CreateItem({ user, listId }) {
   }
 
   return (
-    <>
+    <div>
       <form
         onSubmit={handleCreateItem}
         className="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:px-0"
@@ -56,7 +56,7 @@ function CreateItem({ user, listId }) {
       </form>
       {/* display error */}
       <Error message={error} />
-    </>
+    </div>
   );
 }
 

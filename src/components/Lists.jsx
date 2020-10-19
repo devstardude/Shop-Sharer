@@ -15,7 +15,7 @@ function UserLists({user}) {
   if(lists.length===0) return <Empty/>
 
   return (
-    <>
+    <div>
       <UserListCount count={lists.length} />
       <section className="text-gray-500 bg-gray-900 body-font">
         <div className="container px-5 py-5 mx-auto">
@@ -27,7 +27,7 @@ function UserLists({user}) {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 
