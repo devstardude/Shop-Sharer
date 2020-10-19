@@ -130,3 +130,11 @@ export function subscribeToListItems(listId,cb){
     .orderBy("created","desc")
     .onSnapshot(cb)
 }
+
+export function deleteListItem(listId,itemId){
+    return db.collection("lists")
+    .doc(listId)
+    .collection("items")
+    .doc(itemId)
+    .delete()
+}
