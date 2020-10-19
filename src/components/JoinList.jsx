@@ -1,7 +1,8 @@
 import React from "react";
-// import * as db from "../firestore";
+import * as db from "../firestore";
 
-function JoinList() {
+function JoinList({list,listId,user}) {
+
   return (
     <section className="text-gray-500 bg-gray-900 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -23,15 +24,20 @@ function JoinList() {
           </div>
           <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
             <h1 className="text-white text-3xl title-font font-large mb-2">
-              You are invited to join <strong>list</strong>
+              You are invited to join <strong>{list.name}</strong>
             </h1>
             <ul className="leading-relaxed text-base">
               <p>Current Users:</p>
               {/* display current users in list */}
+              {list.users.map(user=>(
+                <li key={user.id} className="font-bold" >
+                  {user.name} 
+                </li>
+              ))}
             </ul>
           </div>
         </div>
-        <button className="flex mx-auto mt-20 text-white bg-orange-500 border-0 py-2 px-8 focus:outline-none hover:bg-orange-600 rounded text-lg">
+        <button onClick={()=>db.addUserToList(user,listId)} className="flex mx-auto mt-20 text-white bg-orange-500 border-0 py-2 px-8 focus:outline-none hover:bg-orange-600 rounded text-lg">
           Join This List
         </button>
       </div>

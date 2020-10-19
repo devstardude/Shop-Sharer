@@ -17,7 +17,11 @@ function ListPage({ location }) {
 
   if (error) return <Error message={error.message} />;
   if (!list) return <Loading />;
-
+  
+  const isNewUser = list.users.every(u=>u.id!==user.uid);
+  if(isNewUser){
+    return <JoinList list={list} listId={listId} user={user} />
+  }
   return (
     <Layout>
       <section className="text-gray-500 bg-gray-900 body-font">
