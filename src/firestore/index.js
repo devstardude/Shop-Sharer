@@ -90,10 +90,35 @@ export async function createList(list, user) {
 export async function getList(listId) {
   try {
     const list = await db.collection("lists").doc(listId).get();
-    if(!list.exists) throw Error("List Doesn't Exist")
+    if (!list.exists) throw Error("List Doesn't Exist");
     return list.data();
   } catch (error) {
+    console.log(error);
+    throw Error(error);
+  }
+}
+
+export async function createListItem({ user, listId, item }) {
+  try {
+    const response = await fetch(
+      `https://screenshotapi.net/api/v1/screenshot?url=${item.link}&token=AP1L57SDZIBINRRCERXPWJIZDORMQ8AG`
+    );
+    const { screenshot } = await response.json();
+    await db.collection("lists")
+      .doc(listId)
+      .collection("items")
+      .add({
+        name: item.name,
+        link: item.link,
+        image: screenshot,
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+        author: {
+          id: user.uid,
+          username: user.displayName,
+        },
+      });
+  } catch (error) {
       console.log(error)
-      throw Error(error);
+      throw new Error(error)
   }
 }
