@@ -4,7 +4,7 @@ import "firebase/firestore";
 import "firebase/storage";
 
 var firebaseConfig = {
-  apiKey: "AIzaSyDI3mq0-adf8nlsyNytmR9x1WqB1gOa8Z8",
+  apiKey: `${import.meta.env.VITE_API}`,
   authDomain: "shopsharer009.firebaseapp.com",
   databaseURL: "https://shopsharer009.firebaseio.com",
   projectId: "shopsharer009",
@@ -101,7 +101,9 @@ export async function getList(listId) {
 export async function createListItem({ user, listId, item }) {
   try {
     const response = await fetch(
-      `https://screenshotapi.net/api/v1/screenshot?url=${item.link}&token=AP1L57SDZIBINRRCERXPWJIZDORMQ8AG`
+      `https://screenshotapi.net/api/v1/screenshot?url=${item.link}&token=${
+        import.meta.env.VITE_SS_API
+      }`
     );
     const { screenshot } = await response.json();
     await db.collection("lists")
