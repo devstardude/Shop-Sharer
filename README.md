@@ -1,6 +1,6 @@
 # Shop Sharer
 <p align="center">
-  <img width="460" height="300" src="https://i.ibb.co/bvgxwVf/blog.png">
+  <img width="460" height="300" src="https://i.ibb.co/rkFv847/shop.png">
 </p>
 
 ### 🌟 Introduction 
