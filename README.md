@@ -1,5 +1,5 @@
 # 🛍️ Shop Sharer
-<p align="center">
+<p align="left">
   <img width="70%" src="https://i.ibb.co/rkFv847/shop.png">
 </p>
 
