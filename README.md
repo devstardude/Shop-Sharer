@@ -1,4 +1,4 @@
-# Shop Sharer
+# 🛍️ Shop Sharer
 <p align="center">
   <img width="460" height="300" src="https://i.ibb.co/rkFv847/shop.png">
 </p>
@@ -9,7 +9,7 @@ Want to make Shopping list from Various Online Stores? On top of that... Want to
 Shop Sharer is to the Rescue.<br/>
 This app make shopping lists from multiple online stores, and share the list with your friends to manage the list from both sides.
 
-### 🛍️ How Does It Work
+### 🛒 How Does It Work
 ---
 Just sign up with Google, make a new List and Start adding new Items to the List.<br/>
 You can Provide link of the Item from any Online store, and an automatic snapshot of that item will be saved as a thumbnail of that item so that you won't forget what it looks like.
